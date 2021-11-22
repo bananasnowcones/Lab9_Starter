@@ -69,23 +69,64 @@
     </form>
 
     <section id="error-btns">
-      <button>Console Log</button>
-      <button>Console Error</button>
-      <button>Console Count</button>
-      <button>Console Warn</button>
-      <button>Console Assert</button>
-      <button>Console Clear</button>
-      <button>Console Dir</button>
-      <button>Console dirxml</button>
-      <button>Console Group Start</button>
-      <button>Console Group End</button>
-      <button>Console Table</button>
-      <button>Start Timer</button>
-      <button>End Timer</button>
-      <button>Console Trace</button>
-      <button>Trigger a Global Error</button>
+      <button id="log">Console Log</button>
+      <button id="error">Console Error</button>
+      <button id="count">Console Count</button>
+      <button id="warn">Console Warn</button>
+      <button id ="assert">Console Assert</button>
+      <button id="clear">Console Clear</button>
+      <button id="dir">Console Dir</button>
+      <button id="dirxml">Console dirxml</button>
+      <button id="CGstart">Console Group Start</button>
+      <button id="CGend">Console Group End</button>
+      <button id="table">Console Table</button>
+      <button id="timer-start">Start Timer</button>
+      <button id="timer-end">End Timer</button>
+      <button id="trace">Console Trace</button>
+      <button id="global-error">Trigger a Global Error</button>
     </section>
   </main>
+
+
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "33ce2aa8314d4366bb03cd587885485f"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+    TrackJS.track('Testing TrackJS!');
+  </script>
+
+  <script>
+    class DivideByZeroError extends Error {
+      constructor(message) {
+        super(message); // (1)
+      this.name = "DivideByZeroError"; // (2)
+      }
+    }
+    function division(a, b) {
+      if (b == 0) {
+        throw new DivideByZeroError("You cannot divide by 0");   
+      }
+    }
+
+    function divideByZero() {
+      let uhoh = 5/0;
+      console.log(uhoh);
+    }
+
+    try {
+      divideByZero();
+    }
+    catch (error) {
+      console.error("Cannot divide by zero!");
+    }
+    finally {
+      console.log("This message means it worked!");
+    }
+                        
+    
+  </script>
 
   <script>
     let form = document.querySelector('form');
@@ -102,7 +143,61 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+
+    let logbtn = document.getElementById("log").addEventListener("click", () => {
+      console.log("Console Log check");
+    });
+    let errorbtn = document.getElementById("error").addEventListener("click", () => {
+      console.error("Console Error check");
+    });
+    let countbtn = document.getElementById("count").addEventListener("click", () => {
+      console.count();
+    });
+    let warnbtn = document.getElementById("warn").addEventListener("click", () => {
+      console.warn("Console Warning check");
+    });
+    let assertbtn = document.getElementById("assert").addEventListener("click", () => {
+      console.assert(0 == 1, 'One does not equal zero');
+    });
+    let clearbtn = document.getElementById("clear").addEventListener("click", () => {
+      console.clear();
+    }); 
+    let tablebtn = document.getElementById("table").addEventListener("click", () => {
+      console.table(["apples", "oranges", "bananas"]);
+    });
+
+    let dirbtn = document.getElementById("dir").addEventListener("click", () => {
+      console.dir(errorBtns);
+    });
+    let dirxmlbtn = document.getElementById("dirxml").addEventListener("click", function() {
+      console.dirxml(errorBtns);
+    }); 
+
+    let CGstartbtn = document.getElementById("CGstart").addEventListener("click", function() {
+      console.group();
+    }); 
+    let CGendbtn = document.getElementById("CGend").addEventListener("click", function() {
+      console.groupEnd();
+    }); 
+
+    let startTimebtn = document.getElementById("timer-start").addEventListener("click", function() {
+      console.time("Time:"); 
+    }); 
+    let endTimebtn = document.getElementById("timer-end").addEventListener("click", function() {
+      console.timeEnd("End Time:"); 
+    }); 
+
+    let tracebtn = document.getElementById("trace").addEventListener("click", function() {
+      console.trace(); 
+    }); 
+
+
+    let globalErrorbtn = document.getElementById("global-error").addEventListener("click", function() {
+      throw new Error("Triggering a Global Error"); 
+    }); 
   </script>
+
+
 </body>
 
 </html>
